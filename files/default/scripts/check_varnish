@@ -1,0 +1,44 @@
+#!/usr/bin/python
+# save as /usr/lib/nagios/plugins/check_varnish_backends.py
+
+from optparse import OptionParser
+import subprocess
+
+def getOptions():
+    arguments = OptionParser()
+    arguments.add_option("--host", dest="host", help="Host varnishadm is running on", type="string", default="localhost")
+    arguments.add_option("--port", dest="port", help="varnishadm port", type="string", default="6082")
+    arguments.add_option("--secret", dest="secret", help="varnishadm secret file", type="string", default="/etc/varnish/secret")
+    arguments.add_option("--command", dest="command", help="varnishadm backend health command", type="string", default="debug.health")
+    return arguments.parse_args()[0]
+
+def run(command, exit_on_fail=True):
+    # don't use check_output in order to supportPython 2.6
+    process = subprocess.Popen(command.split(" "), stdout=subprocess.PIPE)
+    output, unused_err = process.communicate()
+    _retcode = process.poll()
+    return output
+
+if __name__ == '__main__':
+
+    options = getOptions()
+    varnishadm_raw = run("varnishadm -T %(host)s:%(port)s -S %(secret)s %(command)s" % options.__dict__)
+
+    lines = varnishadm_raw.split("\n")
+    backends_sick, backends_healthy = [], []
+    for line in lines:
+        if line.startswith("Backend"):
+            if line.endswith("Sick"):
+                backends_sick.append(line)
+            else:
+                backends_healthy.append(line)
+
+    if not backends_healthy and not backends_sick:
+        print "There are NO backends"
+        exit(2)
+
+    if backends_sick:
+        print "".join(backends_sick)
+        exit(2)
+
+    print "All %s backends are healthy" % len(backends_healthy)

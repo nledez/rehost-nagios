@@ -1,0 +1,54 @@
+#!/bin/bash
+RET=0
+DATA=`echo;sudo /usr/sbin/vzlist -1 2>/dev/null | xargs -I {} bash -c "echo {}:;sudo /usr/sbin/vzquota stat {} | sed 's/\*//g'"`
+if [ -z "$DATA" ]; then
+        VPS_err=$(sudo /usr/sbin/vzlist -1 2>&1 1>/dev/null)
+        if [ -n "$VPS_err" ] && [ "$VPS_err" == "Container(s) not found" ]; then
+                echo "OK - $VPS_err";
+                exit 0;
+        else
+                if [ -n "$VPS_err" ]; then
+                        echo "UNKNOWN - Error: $VPS_err";
+                else
+                        echo "UNKNOWN - VZquota stats are not readable or empty. Maybe it is only readable for root and this script should be called by sudo.";
+                fi
+                exit 3;
+        fi
+fi
+ 
+echo "$DATA" | perl  -n -e'
+my $vid ;
+my $ret=0 ;
+my $crit="";
+my $warn="";
+my $ok="";
+while(<STDIN>){
+        my %vid;
+        if ( /^(\d+):.*/ ){ $vid=$1; }
+        if ( /\D*(\d+):.*/ ){ $vid=$1; }
+        if ( /\s*(\S+)\s+(\d+)\s+(\d+)\s+(\d+).*/ ){
+                $resource=$1 ;
+                $usage=$2 ;
+                $softlimit=$3 ;
+                $hardlimit=$4 ;
+                if ( $usage >= $hardlimit ){
+                        $crit=$crit."VZquota limit exceeded on $vid: $resource  usage->$usage, softlimit->$softlimit, hardlimit->$hardlimit, time->$time, expire->$expire  " ;
+                        $ret=2;
+                } elsif ( $usage >= $softlimit ){
+                        $warn=$warn."VZquota limit exceeded on $vid: $resource  usage->$usage, softlimit->$softlimit, hardlimit->$hardlimit, time->$time, expire->$expire  " ;
+                        $ret=1;
+                }
+                $ok=$ok."$vid:$resource $usage/$softlimit\n";
+        }
+}
+if ($ret == 0) {
+        print "OK - click on service-link for details...\n$ok";
+} elsif ($ret == 1)  {
+        print "WARNING - $warn\n";
+} else {
+        print "CRITICAL - $crit\n";
+}
+exit($ret);
+'
+RET=$?
+exit $RET
