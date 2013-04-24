@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: ledez-nagios
+# Cookbook Name:: rehost-nagios
 # Recipe:: default
 #
 # Copyright 2013, ReHost
@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-node['ledez-nagios']['packages'].each do |pkg|
+node['rehost-nagios']['packages'].each do |pkg|
   package pkg do
     action :install
   end

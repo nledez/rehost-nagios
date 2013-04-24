@@ -1,4 +1,4 @@
-name             'ledez-nagios'
+name             'rehost-nagios'
 maintainer       'ReHost'
 maintainer_email 'nicolas@ledez.net'
 license          'All rights reserved'

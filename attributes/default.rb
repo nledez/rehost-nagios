@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: ledez-nagios
+# Cookbook Name:: rehost-nagios
 # Recipe:: default
 #
 # Copyright 2013, ReHost
@@ -9,5 +9,5 @@
 
 case platform
 when "debian", "ubuntu"
-  default['ledez-nagios']['packages'] = [ "nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard" ]
+  default['rehost-nagios']['packages'] = [ "nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard" ]
 end

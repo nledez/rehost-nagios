@@ -1,10 +1,10 @@
-# CHANGELOG for ledez-nagios
+# CHANGELOG for rehost-nagios
 
-This file is used to list changes made in each version of ledez-nagios.
+This file is used to list changes made in each version of rehost-nagios.
 
 ## 0.1.0:
 
-* Initial release of ledez-nagios
+* Initial release of rehost-nagios
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
