@@ -12,3 +12,28 @@ node['rehost-nagios']['packages'].each do |pkg|
     action :install
   end
 end
+
+service node['rehost-nagios']['nrpe-service'] do
+  action [:start, :enable]
+end
+
+directory node['rehost-nagios']['script-dir'] do
+  owner "root"
+  group "root"
+  mode "0755"
+end
+
+
+#[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
+  #cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
+    #source "conf/#{f}"
+#[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
+cookbook_file "syslog-ng.cfg" do
+  path "/etc/nagios/nrpe.d/syslog-ng.cfg"
+  source "conf/syslog-ng.cfg"
+  #mode '0644'
+  #owner 'root'
+  #group 'root'
+  action :create
+end
+#end
