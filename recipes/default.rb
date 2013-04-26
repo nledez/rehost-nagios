@@ -25,16 +25,14 @@ directory node['rehost-nagios']['script-dir'] do
 end
 
 
-#[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
-  #cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
-    #source "conf/#{f}"
-#[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
-cookbook_file "/etc/nagios/nrpe.d/syslog-ng.cfg" do
-  path "/etc/nagios/nrpe.d/syslog-ng.cfg"
-  source "conf/syslog-ng.cfg"
-  mode '0644'
-  owner 'root'
-  group 'root'
-  action :create
+#cookbook_file "/etc/nagios/nrpe.d/syslog-ng.cfg" do
+[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
+  cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
+    path "/etc/nagios/nrpe.d/#{f}"
+    source "conf/#{f}"
+    mode '0644'
+    owner 'root'
+    group 'root'
+    action :create
+  end
 end
-#end
