@@ -2,6 +2,7 @@ require 'chefspec'
 
 describe 'rehost-nagios::default' do
   let(:chef_run) { ChefSpec::ChefRunner.new.converge 'rehost-nagios::default' }
+
   it 'Deploy nagios-nrpe-server' do
     runner = expect(chef_run)
 
@@ -30,5 +31,15 @@ describe 'rehost-nagios::default' do
     file = chef_run.template("/etc/nagios/nrpe.d/allowed.cfg")
     expect(file).to be_owned_by('root', 'root')
     runner.to create_file_with_content "/etc/nagios/nrpe.d/allowed.cfg", /^allowed_hosts=127.0.0.1,91.121.88.157,87.98.179.41$/
+  end
+
+  it "Can override allowed hosts" do
+    chef_run2 = ChefSpec::ChefRunner.new
+    chef_run2.converge 'rehost-nagios::default'
+    chef_run2.node.set['rehost-nagios']['allowed_hosts'] = "127.0.0.1"
+
+    runner = expect(chef_run2)
+
+    runner.to create_file_with_content "/etc/nagios/nrpe.d/allowed.cfg", /^allowed_hosts=127.0.0.1$/
   end
 end
