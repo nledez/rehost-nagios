@@ -1,7 +1,7 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-gem "chefspec", :git => "https://github.com/acrmp/chefspec.git"
+gem "chefspec"
 
 gem "guard"
 gem "guard-rspec"
