@@ -24,24 +24,29 @@ directory node['rehost-nagios']['script-dir'] do
   mode "0755"
 end
 
-[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
-  cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
-    path "#{node['rehost-nagios']['config-dir']}/#{f}"
-    source "conf/#{f}"
-    mode '0644'
-    owner 'root'
-    group 'root'
-    action :create
-  end
-end
-
 [ "check_memory", "check_apt" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
-    path "#{node['rehost-nagios']['script-dir']}/#{f}"
     source "scripts/#{f}"
     mode '0644'
     owner 'root'
     group 'root'
-    action :create
   end
+end
+
+[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
+  cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
+    source "conf/#{f}"
+    mode '0644'
+    owner 'root'
+    group 'root'
+    notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
+  end
+end
+
+template "/etc/nagios/nrpe.d/allowed.cfg" do
+  source "allowed.cfg.erb"
+  mode '0644'
+  owner 'root'
+  group 'root'
+  notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
 end
