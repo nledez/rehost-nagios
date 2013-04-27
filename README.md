@@ -1,23 +1,14 @@
 rehost-nagios Cookbook
 =====================
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
+Install and configure Nagios for ReHost hosting customers.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - rehost-nagios needs toaster to brown your bagel.
+ReHost hosting
+Debian, Ubuntu
 
 Attributes
 ----------
-TODO: List you cookbook attributes here.
-
-e.g.
 #### rehost-nagios::default
 <table>
   <tr>
@@ -27,19 +18,17 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['rehost-nagios']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['rehost-nagios']['allowed_hosts']</tt></td>
+    <td>String</td>
+    <td>Host list allowed to connect on nrpe server</td>
+    <td><tt>127.0.0.1,91.121.88.157,87.98.179.41</tt></td>
   </tr>
 </table>
 
 Usage
 -----
 #### rehost-nagios::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
 Just include `rehost-nagios` in your node's `run_list`:
 
 ```json
@@ -51,18 +40,19 @@ Just include `rehost-nagios` in your node's `run_list`:
 }
 ```
 
-Contributing
-------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
+All there modules are availables:
+rehost-nagios
+rehost-nagios::clamav
+rehost-nagios::imap
+rehost-nagios::md
+rehost-nagios::mon
+rehost-nagios::mysql
+rehost-nagios::nginx
+rehost-nagios::vz
 
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Closed source for now
+All right reserved
+Authors: Nicolas Ledez nicolas@ledez.net
