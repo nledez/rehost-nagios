@@ -14,10 +14,16 @@ describe 'rehost-nagios::default' do
 
     runner.to create_directory "/usr/local/lib/nagios/plugins"
 
-    #runner.template("/etc/nagios/nrpe.d/syslog-ng.cfg").should exist
-  #  #[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
-  #    #runner.to create_file "/etc/nagios/nrpe.d/#{f}"
-  #    #file = chef_run.file("/etc/nagios/nrpe.d/#{f}")
-  #    #expect(file).to be_owned_by('root', 'root')
+    [ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
+      runner.to create_cookbook_file "/etc/nagios/nrpe.d/#{f}"
+      file = chef_run.cookbook_file("/etc/nagios/nrpe.d/#{f}")
+      expect(file).to be_owned_by('root', 'root')
+    end
+
+    [ "check_memory", "check_apt" ].each do |f|
+      runner.to create_cookbook_file "/usr/local/lib/nagios/plugins/#{f}"
+      file = chef_run.cookbook_file("/usr/local/lib/nagios/plugins/#{f}")
+      expect(file).to be_owned_by('root', 'root')
+    end
   end
 end
