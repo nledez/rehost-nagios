@@ -27,7 +27,7 @@ end
 [ "check_memory", "check_apt" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"
-    mode '0644'
+    mode '0755'
     owner 'root'
     group 'root'
   end
