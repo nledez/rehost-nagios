@@ -5,6 +5,10 @@ describe 'rehost-nagios::clamav' do
   it 'Add clamav config files' do
     runner = expect(chef_run)
 
+    [ "clamav", "clamav-daemon", "clamav-testfiles" ].each do |p|
+      runner.to install_package p
+    end
+
     runner.to create_cookbook_file "/etc/clamav/clam_test.conf"
     file = chef_run.cookbook_file("/etc/clamav/clam_test.conf")
     expect(file).to be_owned_by('root', 'root')

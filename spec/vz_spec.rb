@@ -5,6 +5,11 @@ describe 'rehost-nagios::vz' do
   it 'Add vz config files' do
     runner = expect(chef_run)
 
+    runner.to create_cookbook_file "/etc/sudoers.d/nagios-vz"
+    file = chef_run.cookbook_file("/etc/sudoers.d/nagios-vz")
+    expect(file).to be_owned_by('root', 'root')
+    expect(file.mode).to eq("0440")
+
     [ "check_ubc", "check_vzquota" ].each do |f|
       runner.to create_cookbook_file "/usr/local/lib/nagios/plugins/#{f}"
       file = chef_run.cookbook_file("/usr/local/lib/nagios/plugins/#{f}")

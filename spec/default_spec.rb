@@ -15,6 +15,11 @@ describe 'rehost-nagios::default' do
 
     runner.to create_directory "/usr/local/lib/nagios/plugins"
 
+    runner.to create_cookbook_file "/etc/sudoers.d/nagios-default"
+    file = chef_run.cookbook_file("/etc/sudoers.d/nagios-default")
+    expect(file).to be_owned_by('root', 'root')
+    expect(file.mode).to eq("0440")
+
     [ "check_memory", "check_apt" ].each do |f|
       runner.to create_cookbook_file "/usr/local/lib/nagios/plugins/#{f}"
       file = chef_run.cookbook_file("/usr/local/lib/nagios/plugins/#{f}")

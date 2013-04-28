@@ -9,6 +9,13 @@
 
 include_recipe "rehost-nagios"
 
+cookbook_file "#{node['rehost-nagios']['sudoers-dir']}/nagios-vz" do
+  source "sudoers/nagios-vz"
+  mode '0440'
+  owner 'root'
+  group 'root'
+end
+
 [ "check_ubc", "check_vzquota" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"

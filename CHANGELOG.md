@@ -10,3 +10,7 @@ This file is used to list changes made in each version of rehost-nagios.
 
 * Change scripts rights
 
+## 1.0.2:
+
+* Add clamav packages, sudoers
+

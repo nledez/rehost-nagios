@@ -9,8 +9,14 @@
 
 include_recipe "rehost-nagios"
 
+node['rehost-nagios']['clamav-packages'].each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
 cookbook_file "/etc/clamav/clam_test.conf" do
-  source "conf/clam_test.conf"
+  source "clam_test.conf"
   mode '0644'
   owner 'root'
   group 'root'

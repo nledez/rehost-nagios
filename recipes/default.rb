@@ -24,6 +24,13 @@ directory node['rehost-nagios']['script-dir'] do
   mode "0755"
 end
 
+cookbook_file "#{node['rehost-nagios']['sudoers-dir']}/nagios-default" do
+  source "sudoers/nagios-default"
+  mode '0440'
+  owner 'root'
+  group 'root'
+end
+
 [ "check_memory", "check_apt" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"
