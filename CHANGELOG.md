@@ -6,3 +6,7 @@ This file is used to list changes made in each version of rehost-nagios.
 
 * Initial release of rehost-nagios
 
+## 1.0.1:
+
+* Change scripts rights
+
