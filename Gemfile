@@ -6,5 +6,7 @@ gem "chefspec"
 gem "guard"
 gem "guard-rspec"
 
-gem 'rb-fsevent', '~> 0.9.1'
-gem 'growl'
+if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-fsevent', '~> 0.9.1'
+  gem 'growl'
+end
