@@ -17,7 +17,7 @@ end
 
 cookbook_file "/etc/clamav/clam_test.conf" do
   source "clam_test.conf"
-  mode '0644'
+  mode '0444'
   owner 'root'
   group 'root'
 end
@@ -25,7 +25,7 @@ end
 [ "check_clamav" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"
-    mode '0644'
+    mode '0555'
     owner 'root'
     group 'root'
   end
@@ -34,7 +34,7 @@ end
 [ "clamav.cfg" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
     source "conf/#{f}"
-    mode '0644'
+    mode '0444'
     owner 'root'
     group 'root'
     notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"

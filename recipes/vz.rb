@@ -19,7 +19,7 @@ end
 [ "check_ubc", "check_vzquota" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"
-    mode '0644'
+    mode '0555'
     owner 'root'
     group 'root'
   end
@@ -28,7 +28,7 @@ end
 [ "openvz.cfg" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
     source "conf/#{f}"
-    mode '0644'
+    mode '0444'
     owner 'root'
     group 'root'
     notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
