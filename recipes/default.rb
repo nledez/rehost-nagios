@@ -21,7 +21,7 @@ directory node['rehost-nagios']['script-dir'] do
   recursive true
   owner "root"
   group "root"
-  mode "0755"
+  mode "0555"
 end
 
 cookbook_file "#{node['rehost-nagios']['sudoers-dir']}/nagios-default" do
@@ -34,7 +34,7 @@ end
 [ "check_memory", "check_apt" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"
-    mode '0755'
+    mode '0555'
     owner 'root'
     group 'root'
   end
@@ -43,7 +43,7 @@ end
 [ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
     source "conf/#{f}"
-    mode '0644'
+    mode '0444'
     owner 'root'
     group 'root'
     notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
@@ -52,7 +52,7 @@ end
 
 template "/etc/nagios/nrpe.d/allowed.cfg" do
   source "allowed.cfg.erb"
-  mode '0644'
+  mode '0444'
   owner 'root'
   group 'root'
   notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"

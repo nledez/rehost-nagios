@@ -24,17 +24,20 @@ describe 'rehost-nagios::default' do
       runner.to create_cookbook_file "/usr/local/lib/nagios/plugins/#{f}"
       file = chef_run.cookbook_file("/usr/local/lib/nagios/plugins/#{f}")
       expect(file).to be_owned_by('root', 'root')
+      expect(file.mode).to eq("0555")
     end
 
     [ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
       runner.to create_cookbook_file "/etc/nagios/nrpe.d/#{f}"
       file = chef_run.cookbook_file("/etc/nagios/nrpe.d/#{f}")
       expect(file).to be_owned_by('root', 'root')
+      expect(file.mode).to eq("0444")
     end
 
     runner.to create_file "/etc/nagios/nrpe.d/allowed.cfg"
     file = chef_run.template("/etc/nagios/nrpe.d/allowed.cfg")
     expect(file).to be_owned_by('root', 'root')
+    expect(file.mode).to eq("0444")
     runner.to create_file_with_content "/etc/nagios/nrpe.d/allowed.cfg", /^allowed_hosts=127.0.0.1,91.121.88.157,87.98.179.41$/
   end
 
