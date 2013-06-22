@@ -35,25 +35,25 @@ describe_recipe 'spec_rehost-nagios::default'do
 
   describe "NRPE is running" do
     it "Can speak with nrpe in local" do
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost`.match /^NRPE v2.12/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c not-exist`.match /^NRPE: Command 'not-exist' not defined$/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost}.must_match /^NRPE v2.12/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c not-exist}.must_match /^NRPE: Command 'not-exist' not defined$/
     end
   end
 
   describe "Default test works" do
     it "Can launch default tests" do
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_all_disks`.match /^DISK OK/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_swap`.match /^SWAP OK/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_memory`.match /^OK: Free memory percentage/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_syslog`.match /, command name 'syslog-ng'$/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_total_procs`.match /^PROCS OK:/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_cron`.match /with command name 'cron'/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_sshd`.match /with command name 'sshd'$/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_rsyslogd`.match /processes with command name 'rsyslogd'$/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_syslogd`.match /processes with command name 'syslogd'$/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_smtp`.match /^SMTP /
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_mailq`.match /mailq/
-      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_all_disks`.match /^DISK OK/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_all_disks}.must_match /^DISK OK/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_swap}.must_match /^SWAP OK/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_memory}.must_match /^OK: Free memory percentage/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_syslog}.must_match /, command name 'syslog-ng'/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_total_procs}.must_match /^PROCS OK:/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_cron}.must_match /with command name 'cron'/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_sshd}.must_match /with command name 'sshd'/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_rsyslogd}.must_match /with command name 'rsyslogd'/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_proc_syslogd}.must_match /processes with command name 'syslogd'/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_smtp}.must_match /^SMTP /
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_mailq}.must_match /mailq/
+      %x{/usr/lib/nagios/plugins/check_nrpe -H localhost -c check_all_disks}.must_match /^DISK OK/
     end
   end
 end
