@@ -36,6 +36,7 @@ describe_recipe 'spec_rehost-nagios::default'do
   describe "NRPE is running" do
     it "Can speak with nrpe in local" do
       `/usr/lib/nagios/plugins/check_nrpe -H localhost`.match /^NRPE v2.12/
+      `/usr/lib/nagios/plugins/check_nrpe -H localhost -c not-exist`.match /^NRPE: Command 'not-exist' not defined$/
     end
   end
 
