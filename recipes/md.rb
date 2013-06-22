@@ -19,7 +19,7 @@ end
 [ "check_md" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
     source "scripts/#{f}"
-    mode '0644'
+    mode '0555'
     owner 'root'
     group 'root'
   end

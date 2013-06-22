@@ -6,21 +6,26 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 worst=0
 msg=""
-for dev in /dev/md?* ; do \
+if [ -e /dev/md?* ] ; then
+  echo "OK" ;
+  for dev in /dev/md?* ; do
     sudo /sbin/mdadm --misc -t $dev
     status=$?
     if [ $status == 0 ]; then
-        msg="${msg} ${dev}: ok"
+      msg="MD: ${msg} ${dev}: ok"
     elif [ $status == 1 ] ; then
-        if [ worst != 2 ] ; then
-            worst=1
-        fi
-        msg="${msg} ${dev}: degraded"
+      if [ worst != 2 ] ; then
+        worst=1
+      fi
+      msg="MD: ${msg} ${dev}: degraded"
     elif [ $status == 2 ] ; then
-        worst=2
-        msg="${msg} ${dev}: unusable"
+      worst=2
+      msg="MD: ${msg} ${dev}: unusable"
     fi
-done
+  done
+else
+  msg="MD: No md devices"
+fi
 
 echo $msg
 exit $worst
