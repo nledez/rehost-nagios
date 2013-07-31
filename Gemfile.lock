@@ -31,7 +31,6 @@ GEM
       chef
       httparty
       net-ssh
-    growl (1.0.3)
     guard (1.6.1)
       listen (>= 0.6.0)
       lumberjack (>= 1.0.2)
@@ -81,7 +80,6 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.3.1)
-    rb-fsevent (0.9.3)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.13.0)
@@ -102,7 +100,5 @@ PLATFORMS
 
 DEPENDENCIES
   chefspec
-  growl
   guard
   guard-rspec
-  rb-fsevent (~> 0.9.1)
