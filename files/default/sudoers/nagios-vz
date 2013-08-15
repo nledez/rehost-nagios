@@ -1,1 +1,1 @@
-nagios   ALL=NOPASSWD: /usr/local/bin/check_ubc, /usr/sbin/vzlist, /usr/sbin/vzquota
+nagios   ALL=NOPASSWD: /usr/local/lib/nagios/plugins/check_ubc, /usr/sbin/vzlist, /usr/sbin/vzquota
