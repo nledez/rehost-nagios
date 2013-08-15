@@ -55,5 +55,8 @@ template "/etc/nagios/nrpe.d/allowed.cfg" do
   mode '0444'
   owner 'root'
   group 'root'
+  variables({
+    :allowed_hosts => node['rehost-nagios']['allowed_hosts']
+  })
   notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
 end

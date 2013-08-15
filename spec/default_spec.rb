@@ -43,8 +43,8 @@ describe 'rehost-nagios::default' do
 
   it "Can override allowed hosts" do
     chef_run2 = ChefSpec::ChefRunner.new
-    chef_run2.converge 'rehost-nagios::default'
     chef_run2.node.set['rehost-nagios']['allowed_hosts'] = "127.0.0.1"
+    chef_run2.converge 'rehost-nagios::default'
 
     runner = expect(chef_run2)
 
