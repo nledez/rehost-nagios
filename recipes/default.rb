@@ -14,7 +14,7 @@ node['rehost-nagios']['packages'].each do |pkg|
 end
 
 service node['rehost-nagios']['nrpe-service'] do
-  action [:start, :enable]
+  action [ :enable ]
 end
 
 directory node['rehost-nagios']['script-dir'] do
@@ -58,5 +58,5 @@ template "/etc/nagios/nrpe.d/allowed.cfg" do
   variables({
     :allowed_hosts => node['rehost-nagios']['allowed_hosts']
   })
-  notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
+  notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]", :delayed
 end

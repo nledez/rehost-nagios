@@ -11,7 +11,6 @@ describe 'rehost-nagios::default' do
     end
 
     runner.to set_service_to_start_on_boot 'nagios-nrpe-server'
-    runner.to start_service 'nagios-nrpe-server'
 
     runner.to create_directory "/usr/local/lib/nagios/plugins"
 

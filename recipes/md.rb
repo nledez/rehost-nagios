@@ -31,6 +31,6 @@ end
     mode '0644'
     owner 'root'
     group 'root'
-    notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]"
+    notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]", :delayed
   end
 end
