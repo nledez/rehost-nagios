@@ -10,14 +10,14 @@ describe 'rehost-nagios::md' do
     expect(file).to be_owned_by('root', 'root')
     expect(file.mode).to eq("0440")
 
-    [ "check_md" ].each do |f|
+    %w{check_md}.each do |f|
       runner.to create_cookbook_file "/usr/local/lib/nagios/plugins/#{f}"
       file = chef_run.cookbook_file("/usr/local/lib/nagios/plugins/#{f}")
       expect(file).to be_owned_by('root', 'root')
       expect(file.mode).to eq("0555")
     end
 
-    [ "mdadm.cfg" ].each do |f|
+    %w{mdadm.cfg}.each do |f|
       runner.to create_cookbook_file "/etc/nagios/nrpe.d/#{f}"
       file = chef_run.cookbook_file("/etc/nagios/nrpe.d/#{f}")
       expect(file).to be_owned_by('root', 'root')

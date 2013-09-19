@@ -5,7 +5,7 @@ describe 'rehost-nagios::mon' do
   it 'Add mon config files' do
     runner = expect(chef_run)
 
-    [ "nagios-nrpe-plugin" ].each do |p|
+    %w{nagios-nrpe-plugin}.each do |p|
       runner.to install_package p
     end
 

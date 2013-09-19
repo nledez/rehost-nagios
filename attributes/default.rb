@@ -7,9 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
-default['rehost-nagios']['packages'] = [ "nagios-nrpe-server", "nagios-plugins", "nagios-plugins-basic", "nagios-plugins-standard" ]
-default['rehost-nagios']['clamav-packages'] = [ "clamav", "clamav-daemon", "clamav-testfiles" ]
-default['rehost-nagios']['mon-packages'] = [ "nagios-nrpe-plugin" ]
+default['rehost-nagios']['packages'] = %w{nagios-nrpe-server nagios-plugins nagios-plugins-basic nagios-plugins-standard}
+default['rehost-nagios']['clamav-packages'] = %w{clamav clamav-daemon clamav-testfiles}
+default['rehost-nagios']['mon-packages'] = %w{nagios-nrpe-plugin}
 default['rehost-nagios']['nrpe-service'] = "nagios-nrpe-server"
 default['rehost-nagios']['script-dir'] = "/usr/local/lib/nagios/plugins"
 default['rehost-nagios']['config-dir'] = "/etc/nagios/nrpe.d"
