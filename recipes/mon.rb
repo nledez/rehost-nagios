@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-node['rehost-nagios']['mon-packages'].each do |pkg|
+node['rehost-nagios']['mon_packages'].each do |pkg|
   package pkg do
     action :install
   end

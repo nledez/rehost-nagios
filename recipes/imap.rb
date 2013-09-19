@@ -10,11 +10,11 @@
 include_recipe "rehost-nagios"
 
 [ "imap.cfg" ].each do |f|
-  cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
+  cookbook_file "#{node['rehost-nagios']['config_dir']}/#{f}" do
     source "conf/#{f}"
     mode '0644'
     owner 'root'
     group 'root'
-    notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]", :delayed
+    notifies :restart, "service[#{node['rehost-nagios']['nrpe_service']}]", :delayed
   end
 end
