@@ -2,6 +2,10 @@ rehost-nagios Cookbook
 =====================
 Install and configure Nagios for ReHost hosting customers.
 
+Build status
+------------
+[![Build Status](https://travis-ci.org/nledez/rehost-nagios.png)](https://travis-ci.org/nledez/rehost-nagios)
+
 Requirements
 ------------
 ReHost hosting
