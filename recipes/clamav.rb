@@ -9,7 +9,7 @@
 
 include_recipe "rehost-nagios"
 
-node['rehost-nagios']['clamav-packages'].each do |pkg|
+node['rehost-nagios']['clamav_packages'].each do |pkg|
   package pkg do
     action :install
   end
@@ -23,7 +23,7 @@ cookbook_file "/etc/clamav/clam_test.conf" do
 end
 
 [ "check_clamav" ].each do |f|
-  cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
+  cookbook_file "#{node['rehost-nagios']['script_dir']}/#{f}" do
     source "scripts/#{f}"
     mode '0555'
     owner 'root'
@@ -32,11 +32,11 @@ end
 end
 
 [ "clamav.cfg" ].each do |f|
-  cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
+  cookbook_file "#{node['rehost-nagios']['config_dir']}/#{f}" do
     source "conf/#{f}"
     mode '0444'
     owner 'root'
     group 'root'
-    notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]", :delayed
+    notifies :restart, "service[#{node['rehost-nagios']['nrpe_service']}]", :delayed
   end
 end

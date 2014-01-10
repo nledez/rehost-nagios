@@ -10,7 +10,7 @@
 include_recipe "rehost-nagios"
 
 [ "check_postgres" ].each do |f|
-  cookbook_file "#{node['rehost-nagios']['script-dir']}/#{f}" do
+  cookbook_file "#{node['rehost-nagios']['script_dir']}/#{f}" do
     source "scripts/#{f}"
     mode '0555'
     owner 'root'
@@ -19,11 +19,11 @@ include_recipe "rehost-nagios"
 end
 
 [ "postgres.cfg" ].each do |f|
-  cookbook_file "#{node['rehost-nagios']['config-dir']}/#{f}" do
+  cookbook_file "#{node['rehost-nagios']['config_dir']}/#{f}" do
     source "conf/#{f}"
     mode '0644'
     owner 'root'
     group 'root'
-    notifies :restart, "service[#{node['rehost-nagios']['nrpe-service']}]", :delayed
+    notifies :restart, "service[#{node['rehost-nagios']['nrpe_service']}]", :delayed
   end
 end

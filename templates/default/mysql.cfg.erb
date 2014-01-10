@@ -1,0 +1,6 @@
+command[check_proc_mysqld]=/usr/lib/nagios/plugins/check_procs -c1 -C mysqld
+command[check_proc_mysqlproxy]=/usr/lib/nagios/plugins/check_procs -c1 -C mysql-proxy
+command[check_mysql_database]=/usr/lib/nagios/plugins/check_mysql -d '<%= @mysql_database %>' -H '<%= @mysql_hostname %>' -u '<%= @mysql_username %>' -p '<%= @mysql_password %>'
+command[check_mysql_slave_lag]=<%= @script_dir %>/check_mysql_health --hostname '<%= @mysql_hostname %>' --username '<%= @mysql_username %>' --password '<%= @mysql_password %>' --mode slave-lag
+command[check_mysql_slave_io_running]=<%= @script_dir %>/check_mysql_health --hostname '<%= @mysql_hostname %>' --username '<%= @mysql_username %>' --password '<%= @mysql_password %>' --mode slave-io-running
+command[check_mysql_slave_sql_running]=<%= @script_dir %>/check_mysql_health --hostname '<%= @mysql_hostname %>' --username '<%= @mysql_username %>' --password '<%= @mysql_password %>' --mode slave-sql-running
