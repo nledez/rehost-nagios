@@ -57,6 +57,6 @@ rehost-nagios::vz
 
 License and Authors
 -------------------
-Closed source for now
-All right reserved
-Authors: Nicolas Ledez nicolas@ledez.net
+Apache v2.0
+
+Authors: Nicolas Ledez chef-cookbook@ledez.net
