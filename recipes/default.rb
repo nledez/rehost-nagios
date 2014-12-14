@@ -50,7 +50,17 @@ end
   end
 end
 
-[ "syslog-ng.cfg", "system.cfg", "linux.cfg" ].each do |f|
+syslogconf = case "#{node[:platform]}-#{node[:platform_version]}"
+         when "ubuntu-10.04" then "syslog-ng.cfg"
+         when /debian-6\.0\../ then "syslog-ng.cfg"
+         else "rsyslog.cfg"
+         end
+
+if node['recipes'].include? 'rehost-syslog::rsyslog'
+  syslogconf = 'rsyslog.cfg'
+end
+
+[ syslogconf, "system.cfg", "linux.cfg" ].each do |f|
   cookbook_file "#{node['rehost-nagios']['config_dir']}/#{f}" do
     source "conf/#{f}"
     mode '0444'
